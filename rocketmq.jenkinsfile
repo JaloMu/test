@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+    tools {
+        maven 'MAVEN'
+    }
+
+    stages {
+        stage("Clean workspace") {
+            steps {
+                deleteDir()
+            }
+        }
+        stage('Git') { 
+            steps {
+                git 'https://github.com/apache/rocketmq.git'
+                echo "${JENKINS_HOME}"
+            }
+        }
+        stage('Build') { 
+            steps {
+                sh """
+                /usr/local/maven/bin/mvn -Prelease-all -DskipTests clean install
+                """
+            }
+        }
+    }
+}
