@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    parameters {
+        string(name: 'BuildParameter', defaultValue: 'none', description: 'default same as RancherProject')
+        choice(name: 'SyncToRancher', choices: ['Y','N'],description: 'sync to rancher')
+    }
     stages {
         stage("Clean workspace") {
             steps {
